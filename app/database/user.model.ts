@@ -5,10 +5,15 @@ export interface IUser {
     username:string;
     email:string;
     number:string;
+    slug:string;
 }
 const UserSchema = new Schema<IUser>(
     {
         username:{
+            type:String,
+            required:true
+        },
+        slug:{
             type:String,
             required:true
         },
@@ -26,7 +31,7 @@ const UserSchema = new Schema<IUser>(
         }
     }
 )
-
+UserSchema.index({ slug: 1, number: 1 }, { unique: true });
 const User = models.User || mongoose.model<IUser>('User',UserSchema)
 
 export default User

@@ -1,15 +1,17 @@
-'use client'
-import Navbar from "./components/navbar";
-import ConnectDb from "../lib/mongoDb";
-import { useSession } from "next-auth/react";
-import { getToken } from "next-auth/jwt";
+import EventCard from "./components/EventCard";
+import { IEvent } from "./database/events.model";
 
-export default function Home() {
-  const {data:session,status} = useSession()
+export default async function Home() {
+  const res = await fetch("http://localhost:3000/api/events")
+  const {data:events} = await res.json()
   return (
-    <div>
-      <h1 className="text-center">Featured Events</h1>
-      <p>{session?.user?.email}</p>
+    <div className="pb-14">
+      <h1 className="text-center mt-5">Featured Events</h1>
+      <div className="flex justify-baseline gap-4 flex-wrap w-3/4 mx-auto">
+      {events.slice(0,6).map((event:IEvent)=>(
+        <EventCard key={event.slug} prop={event}/>
+      ))}
+      </div>
     </div>
   );
 }

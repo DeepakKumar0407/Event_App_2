@@ -8,10 +8,10 @@ export default function LoginButton() {
   if (session) {
     return (
       <li className="bg-[#3a4b77] p-3 border-2 border-[#010719] rounded mt-9 mb-10">
-        <button onClick={() => signOut()}>Logout</button>
+        <button className="cursor-pointer" onClick={() => signOut()}>Logout</button>
       </li>
     );
   }
 
-  return <li className="bg-[#3a4b77] p-3 border-2 border-[#010719] rounded mt-9 mb-10"><button onClick={() => signIn("github")}>Login</button></li>
+  return <li className="bg-[#3a4b77] p-3 border-2 border-[#010719] rounded mt-9 mb-10"><button className="cursor-pointer" onClick={() => signIn("github")}>Login</button></li>
 }

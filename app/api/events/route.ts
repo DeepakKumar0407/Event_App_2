@@ -16,7 +16,6 @@ export async function POST(req:NextRequest){
         const image = data.get('image') as File
         const arrayBuffer = await image.arrayBuffer()
         const buffer = Buffer.from(arrayBuffer)
-        console.log("hello")
         const uploadResult = await new Promise((resolve,reject)=>{
             cloudinary.uploader.upload_stream({resource_type: 'image', folder: 'Events'},(error,result)=>{
                 if(error){
@@ -25,8 +24,6 @@ export async function POST(req:NextRequest){
                 return resolve(result)
             }).end(buffer)
         })
-        console.log("hello")
-        console.log((uploadResult as {secure_url:string}).secure_url)
         const event = {
             title:data.get('title'),
             description:data.get('description'),
@@ -48,8 +45,6 @@ export async function POST(req:NextRequest){
 export async function GET(req:NextRequest){
     try {
         await ConnectDb()
-          const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET});
-    console.log("JWT token:", token);
         const data = await Event.find().sort({createdAt:-1})
         return NextResponse.json({massage:'data fetched',data},{status:200})
     } catch (error) {

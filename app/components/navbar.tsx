@@ -28,7 +28,6 @@ const Navbar = () => {
         <img src="/logo.png" alt="logo"width={180} />
         </div>
         <ul className="flex justify-around gap-4 mr-10">
-            <li className="bg-[#3a4b77] p-3 border-2 border-[#010719] rounded mt-9 mb-10"><Link href="/">Home</Link></li>
             <LoginButton/>
         </ul>
     </div>

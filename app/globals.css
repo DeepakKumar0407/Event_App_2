@@ -29,3 +29,9 @@ body {
 h1{
   @apply text-6xl
 }
+.label{
+@apply w-2/5 m-2 mr-0 font-bold text-xl flex items-center gap-1.5
+}
+.input{
+@apply w-full border-2 rounded p-1.5 text-sm bg-[#87a1e4] text-white
+}
