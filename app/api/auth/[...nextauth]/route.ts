@@ -1,5 +1,5 @@
 import NextAuth,{AuthOptions} from "next-auth"
-import GithubProvider from "next-auth/providers/github"
+import GithubProvider, { GithubProfile } from "next-auth/providers/github"
 
 export const authOptions: AuthOptions ={
     session: {
@@ -12,12 +12,18 @@ export const authOptions: AuthOptions ={
     }),
   ],
   callbacks: {
-  async jwt({ token, user }) {
+  async jwt({ token, user,profile }) {
     if (user) token.email = user.email || null;
+    if(profile){
+    const githubProfile = profile as GithubProfile
+    token.githubUsername = githubProfile.login
+    }
     return token;
   },
   async session({ session, token }) {
-    if (session.user) session.user.email = token.email || null;
+    if (session.user){ session.user.email = token.email || null;
+    session.user.githubUsername = token.githubUsername as string
+    }
     return session;
   },
 },

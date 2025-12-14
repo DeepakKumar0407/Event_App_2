@@ -27,6 +27,7 @@ export async function POST(req:NextRequest){
         const event = {
             title:data.get('title'),
             description:data.get('description'),
+            number:data.get('number'),
             location:data.get('location'),
             date:data.get("date"),
             time:data.get('time'),
@@ -35,7 +36,7 @@ export async function POST(req:NextRequest){
             tags:data.get('tags')?.toString().split(','),
         }
         const createdEvent = await Event.create(event)
-        return NextResponse.json({message:"Created",event:createdEvent},{status:200})
+        return NextResponse.json({message:"success",event:createdEvent},{status:200})
     } catch (error) {
         console.log(error)
         return NextResponse.json({error:"Error uploading"},{status:500})

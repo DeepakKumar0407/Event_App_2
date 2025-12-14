@@ -7,11 +7,11 @@ export default function LoginButton() {
 
   if (session) {
     return (
-      <li className="bg-[#3a4b77] p-3 border-2 border-[#010719] rounded mt-9 mb-10">
-        <button className="cursor-pointer" onClick={() => signOut()}>Logout</button>
-      </li>
+        <button className="cursor-pointer bg-[#3a4b77] p-3 border-2 border-[#010719] rounded mt-9 mb-10 hover:bg-[#87a1e4]" onClick={() => signOut()}><li>
+        Logout</li></button>
     );
   }
 
-  return <li className="bg-[#3a4b77] p-3 border-2 border-[#010719] rounded mt-9 mb-10"><button className="cursor-pointer" onClick={() => signIn("github")}>Login</button></li>
+  return <button className="cursor-pointer bg-[#3a4b77] p-3 border-2 border-[#010719] rounded mt-9 mb-10 hover:bg-[#87a1e4]" onClick={() => signIn("github")}>
+    <li>Login</li></button>
 }

@@ -23,7 +23,7 @@ const UserSchema = new Schema<IUser>(
         },
         number:{
             type:String,
-            required:true,
+            required:[true, 'Phone number required'],
             validate:{
                 validator:(v:string)=>v.length ===10,
                 message:"Enter a 10 digit valid phone number"

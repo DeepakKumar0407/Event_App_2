@@ -6,6 +6,7 @@ export interface IEvent extends Document {
     title:string;
     slug:string;
     description:string;
+    number:string;
     location:string;
     date:string;
     time:string;
@@ -17,7 +18,8 @@ export interface IEvent extends Document {
 const EventSchema = new Schema<IEvent>({
     title:{
         type:String,
-        required: true,
+        required: [true, 'Title required'],
+        maxlength:50
 
     },
      slug:{
@@ -26,37 +28,46 @@ const EventSchema = new Schema<IEvent>({
     },
      description:{
         type:String,
-        required: true,
+        required:[true, 'Description required'],
+        maxlength:1000
 
-    },
+    }, number:{
+            type:String,
+            required:[true, 'Phone number required'],
+            validate:{
+                validator:(v:string)=>v.length ===10,
+                message:"Enter a 10 digit valid phone number"
+            }
+        },
      location:{
         type:String,
-        required: true,
+        required:[true, 'Location required'],
+        maxlength:500
 
     },
     email:{
         type:String,
-        required: true,
+        required:[true, 'Email required']
 
     },
      date:{
         type:String,
-        required: true,
-
+        required:[true, 'Date required']
     },
      time:{
         type:String,
-        required: true,
+        required:[true, 'Time required']
 
     },
      image:{
         type:String,
-        required: true,
+        required:[true, 'Image required']
 
     },
      tags:{
         type:[String],
-        required: true,
+        required:[true, 'Tags required'],
+        maxlength:50
 
     },
 },{timestamps:true})

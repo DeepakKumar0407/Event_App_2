@@ -11,7 +11,7 @@ const Create = async () => {
     )
   } else {
      return (
-    <div>
+    <div className="pb-15">
       <h1 className="text-center mt-5">Submit Your Event</h1>
       <Form/>
     </div>
