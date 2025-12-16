@@ -1,4 +1,4 @@
-import ConnectDb from "@/lib/mongoDb";
+import ConnectDb from "../../../../../lib/mongoDb";
 import { NextRequest,NextResponse } from "next/server";
 import Event from "@/app/database/events.model";
 import { arrayBuffer } from "stream/consumers";
@@ -40,11 +40,15 @@ export async function POST(req:NextRequest){
     }
     
 }
-export async function GET(req:NextRequest){
+export async function GET(req:NextRequest,{params}:{params:Promise<{slug:number}>}){
     try {
         await ConnectDb()
-        const data = await Event.find().sort({createdAt:-1}).limit(6)
-        return NextResponse.json({massage:'data fetched',data},{status:200})
+        let {slug:page} = await params
+        const eventPerPage = 6
+        let eventToSkip = page ===1?0:((page-1)*eventPerPage)
+        const total = await Event.find().countDocuments()
+        const data = await Event.find().sort({createdAt:-1}).skip(eventToSkip).limit(eventPerPage)
+        return NextResponse.json({massage:'data fetched',data,total},{status:200})
     } catch (error) {
         console.log(error)
         return NextResponse.json({error:"Cant get data"},{status:500})

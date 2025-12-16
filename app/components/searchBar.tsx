@@ -6,7 +6,6 @@ import { usePathname, useSearchParams, useRouter } from "next/navigation"
 
 const SearchBar = ({prop}:{prop:string|null}) => {
   const query = prop
-  console.log(query)
   const searchParams = useSearchParams()
   const pathname = usePathname()
   const {replace} = useRouter()

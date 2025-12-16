@@ -3,12 +3,17 @@ import { IEvent } from "@/app/database/events.model";
 import { getServerSession } from "next-auth/next";
 import ErrorPage from "@/app/error/page"; 
 import { authOptions } from "@/app/api/auth/[...nextauth]/route"; 
-export default async function SearchPage({params}:{params:Promise<{slug:string}>}) {
+import Pagination from "@/app/components/pagination";
+interface PageProps {
+  params: Promise<{ slug: string }>;
+  searchParams: Promise<{ [key: string]: string | undefined }>; 
+}
+export default async function SearchPage({params,searchParams}:PageProps) {
   const {slug} = await params
-  console.log(slug,"hi")
+  const {page:currentPage} = await searchParams
   const session = await getServerSession(authOptions)
-  const res = await fetch(`http://localhost:3000/api/search/${slug}`)
-  const {data:events} = await res.json()
+  const res = await fetch(`http://localhost:3000/api/search/${slug}/${currentPage}`)
+  const {data:events,total} = await res.json()
   if(!session){
     return(
     <ErrorPage/>
@@ -22,6 +27,7 @@ export default async function SearchPage({params}:{params:Promise<{slug:string}>
         <EventCard key={event.slug} prop={event}/>
       ))}
       </div>
+      <Pagination prop={total}/>
     </div>
   );}
 }

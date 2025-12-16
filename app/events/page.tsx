@@ -3,13 +3,12 @@ import { IEvent } from "../database/events.model";
 import { getServerSession } from "next-auth/next";
 import ErrorPage from "../error/page";
 import { authOptions } from "../api/auth/[...nextauth]/route";
-import SearchBar from "../components/searchBar";
-export default async function Events(props:{searchParams?:Promise<{query?:string}>}) {
-  const searchParams = await props.searchParams
-  const query = searchParams?.query
+import Pagination from "../components/pagination";
+export default async function Events({ searchParams }: { searchParams: Promise<{ [key: string]: string | string[] | undefined }> }) {
   const session = await getServerSession(authOptions)
-  const res = await fetch("http://localhost:3000/api/events")
-  const {data:events} = await res.json()
+  const {page:currentPage} = await searchParams
+  const res = await fetch(`http://localhost:3000/api/events/allevents/${currentPage}`)
+  const {data:events,total} = await res.json()
   if(!session){
     return(
     <ErrorPage/>
@@ -23,6 +22,7 @@ export default async function Events(props:{searchParams?:Promise<{query?:string
         <EventCard key={event.slug} prop={event}/>
       ))}
       </div>
+      <Pagination prop={total}/>
     </div>
   );}
 }

@@ -1,6 +1,7 @@
 "use client"
 import { useState } from "react"
 import { useSession } from "next-auth/react";
+import Link from "next/link";
 interface FormType{
     title:string;
     description:string;
@@ -74,7 +75,7 @@ const Form = () => {
           <label className="w-5/6 m-2 mr-0 font-bold text-xl flex items-center gap-1.5">Description<textarea name="description" onChange={handleChange} value={formData.description} placeholder="Enter Descroption" className="input whitespace-pre-wrap break-words" required maxLength={1000}></textarea></label>
           <label className="w-5/6 m-2 mr-0 font-bold text-xl flex items-center gap-1.5">Location<textarea name="location" onChange={handleChange} value={formData.location} placeholder="Enter Location" className="input whitespace-pre-wrap break-words" required maxLength={500}></textarea></label>
           <div className="label justify-center bg-green-800 rounded p-2 hover:bg-green-500">
-            <button type="submit" className="cursor-pointer w-full h-full">Submit</button>
+            <button type="submit" className="cursor-pointer w-full h-full" onClick={() => window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' })}>Submit</button>
           </div>
           <div className="w-full">
           <p className="text-center">{isLoading?"Loading...":submitted}</p>
